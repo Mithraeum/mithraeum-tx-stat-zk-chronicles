@@ -1,0 +1,518 @@
+{
+  "_format": "hh-sol-artifact-1",
+  "contractName": "Config",
+  "sourceName": "contracts/libraries/Config.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "armyStunDurationByJoiningBattleAtAttackingSide",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "armyStunDurationPerRobberyMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "baseBattleDuration",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "battleDurationLosingArmyStunMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "battleDurationWinningArmyStunMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "buildingTokenTransferThresholdPercent",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "captureTileDurationPerTile",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cultistUnitTypeId",
+      "outputs": [
+        {
+          "internalType": "bytes32",
+          "name": "",
+          "type": "bytes32"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cultistsNoDestructionDelay",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cultistsPerRegionMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "cultistsSummonDelay",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "globalMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialCaptureProsperityBasicValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialCaptureProsperityPerTileValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialCorruptionIndexAmountPerRegionTier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialCultistsAmountPerRegionTier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maneuverDurationStunMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxAdvancedProductionTileBuff",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxAllowedRobberyMultiplierIncreaseValue",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxAllowedUnitsToBuyPerTransaction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxAllowedWorkersToBuyPerTransaction",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxCultistsPerRegion",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxRegionTier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "maxSettlementsPerRegion",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minimumBattleDuration",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "minimumUserSettlementsCountInNeighboringRegionRequiredToIncludeRegion",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "necessaryProsperityPercentForClaimingTileCapture",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "newSettlementPriceIncreaseMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "newSettlementStartingPrice",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nextCaptureProsperityBasicThreshold",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "nextCaptureProsperityPerTileThreshold",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "productionTicksInSecond",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "robberyPointsPerDamageMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "settlementPayToDecreaseCorruptionIndexPenaltyMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "settlementPriceMultiplierPerIncreasedRegionTier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "stunDurationMultiplierOfCancelledSecretManeuver",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "tileCaptureCancellationFee",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "toTreasuryPercent",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "unitHiringFortHpMultiplier",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x61055d610039600b82828239805160001a607314602c57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600436106102b75760003560e01c80639b138f6a11610185578063d1a3830b116100e2578063e5e2575011610096578063f94f75b11161007b578063f94f75b1146102df578063f95bbf3f14610490578063ff295fdc1461049f57600080fd5b8063e5e2575014610478578063ef69d7221461048157600080fd5b8063dae49881116100c7578063dae4988114610451578063dbd63eb414610461578063dc74318a1461047057600080fd5b8063d1a3830b14610433578063d787b6901461044257600080fd5b8063adfb505411610139578063beaa602d1161011e578063beaa602d1461041c578063c1de067d146102f0578063c3a64f441461042457600080fd5b8063adfb505414610384578063ba75ebfb1461040d57600080fd5b8063a3f6254b1161016a578063a3f6254b146103e8578063ab6bea84146103f0578063acfb7304146103ff57600080fd5b80639b138f6a146103cf5780639df20643146103d957600080fd5b806349d550af116102335780636623ccc6116101e7578063771cfd84116101cc578063771cfd84146103bd5780637d5ee656146103c557806394166b20146102f057600080fd5b80636623ccc6146103a55780636d593989146103ae57600080fd5b80634efd9ab1116102185780634efd9ab1146103845780636089c6311461039357806361f94e151461039d57600080fd5b806349d550af1461036d5780634e38696c1461037c57600080fd5b8063220d89bb1161028a57806334dbc1331161026f57806334dbc133146103455780633c68c98614610356578063497cbd8a1461036557600080fd5b8063220d89bb146102ff5780632fe8fda2146102df57600080fd5b806301160aa2146102bc5780630daef20c146102d65780631b3f578d146102df57806321413e44146102f0575b600080fd5b6102c4600a81565b60405190815260200160405180910390f35b6102c461fd2081565b6102c469010f0cf064dd5920000081565b6102c4670de0b6b3a764000081565b6040805180820190915260078152662ba0a92924a7a960c91b6020909101526102c47f69c5317e5ce44f1a1fb56c6a5eff904214e6353da6310ab0a6b511eef9a7c39181565b6102c469021e19e0c9bab240000081565b6102c46704a628b99fc1800081565b6102c4600081565b6102c46703782dace9d9000081565b6102c4602881565b6102c46706f05b59d3b2000081565b6102c46201518081565b6102c46104a7565b6102c4617e9081565b6102c4670429d069189e000081565b6102c4600481565b6102c4620d2f0081565b6102c4621a5e0081565b6102c4670853a0d2313c000081565b6102c4600281565b6102c467093a8dfa07a2800081565b6102c466b1a2bc2ec5000081565b6102c467058d15e17628000081565b6102c4600581565b6102c46710a741a46278000081565b6102c4671bc16d674ec8000081565b6102c4674563918244f4000081565b6102c4685150ae84a8cdf0000081565b6102c467120a871cc002000081565b6102c4601481565b6102c461a8c081565b6102c46729a2241af62c000081565b6102c46709b6e64a8ec6000081565b6102c46104be565b6104bb685150ae84a8cdf0000060056104da565b81565b6104bb670de0b6b3a764000069021e19e0c9bab2400000610505565b80820281158282048414176104ff57634e487b7160e01b600052601160045260246000fd5b92915050565b60008261052257634e487b7160e01b600052601260045260246000fd5b50049056fea2646970667358221220bcb510e0448a59ff94c21b1b8bca0cdc1b34844f3daec3b1b93c0d25e54bc15764736f6c634300081a0033",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600436106102b75760003560e01c80639b138f6a11610185578063d1a3830b116100e2578063e5e2575011610096578063f94f75b11161007b578063f94f75b1146102df578063f95bbf3f14610490578063ff295fdc1461049f57600080fd5b8063e5e2575014610478578063ef69d7221461048157600080fd5b8063dae49881116100c7578063dae4988114610451578063dbd63eb414610461578063dc74318a1461047057600080fd5b8063d1a3830b14610433578063d787b6901461044257600080fd5b8063adfb505411610139578063beaa602d1161011e578063beaa602d1461041c578063c1de067d146102f0578063c3a64f441461042457600080fd5b8063adfb505414610384578063ba75ebfb1461040d57600080fd5b8063a3f6254b1161016a578063a3f6254b146103e8578063ab6bea84146103f0578063acfb7304146103ff57600080fd5b80639b138f6a146103cf5780639df20643146103d957600080fd5b806349d550af116102335780636623ccc6116101e7578063771cfd84116101cc578063771cfd84146103bd5780637d5ee656146103c557806394166b20146102f057600080fd5b80636623ccc6146103a55780636d593989146103ae57600080fd5b80634efd9ab1116102185780634efd9ab1146103845780636089c6311461039357806361f94e151461039d57600080fd5b806349d550af1461036d5780634e38696c1461037c57600080fd5b8063220d89bb1161028a57806334dbc1331161026f57806334dbc133146103455780633c68c98614610356578063497cbd8a1461036557600080fd5b8063220d89bb146102ff5780632fe8fda2146102df57600080fd5b806301160aa2146102bc5780630daef20c146102d65780631b3f578d146102df57806321413e44146102f0575b600080fd5b6102c4600a81565b60405190815260200160405180910390f35b6102c461fd2081565b6102c469010f0cf064dd5920000081565b6102c4670de0b6b3a764000081565b6040805180820190915260078152662ba0a92924a7a960c91b6020909101526102c47f69c5317e5ce44f1a1fb56c6a5eff904214e6353da6310ab0a6b511eef9a7c39181565b6102c469021e19e0c9bab240000081565b6102c46704a628b99fc1800081565b6102c4600081565b6102c46703782dace9d9000081565b6102c4602881565b6102c46706f05b59d3b2000081565b6102c46201518081565b6102c46104a7565b6102c4617e9081565b6102c4670429d069189e000081565b6102c4600481565b6102c4620d2f0081565b6102c4621a5e0081565b6102c4670853a0d2313c000081565b6102c4600281565b6102c467093a8dfa07a2800081565b6102c466b1a2bc2ec5000081565b6102c467058d15e17628000081565b6102c4600581565b6102c46710a741a46278000081565b6102c4671bc16d674ec8000081565b6102c4674563918244f4000081565b6102c4685150ae84a8cdf0000081565b6102c467120a871cc002000081565b6102c4601481565b6102c461a8c081565b6102c46729a2241af62c000081565b6102c46709b6e64a8ec6000081565b6102c46104be565b6104bb685150ae84a8cdf0000060056104da565b81565b6104bb670de0b6b3a764000069021e19e0c9bab2400000610505565b80820281158282048414176104ff57634e487b7160e01b600052601160045260246000fd5b92915050565b60008261052257634e487b7160e01b600052601260045260246000fd5b50049056fea2646970667358221220bcb510e0448a59ff94c21b1b8bca0cdc1b34844f3daec3b1b93c0d25e54bc15764736f6c634300081a0033",
+  "linkReferences": {},
+  "deployedLinkReferences": {}
+}

@@ -1,0 +1,9 @@
+type Tx @entity {
+    id: ID!
+    blockNumber: BigInt!
+    time: BigInt!
+    gasLimit: BigInt!
+    gasPrice: BigInt!
+    gasUsed: BigInt!
+    cumulativeGasUsed: BigInt!
+}

@@ -1,0 +1,38 @@
+{
+  "name": "@mithraeum/mithraeum-tx-stat-zk-chronicles",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "codegen": "graph codegen",
+    "buildGraph": "graph build",
+    "deploy-zkSyncChronicles": "graph deploy --studio mithraeum-zk-chronicles-with-tx-stat",
+    "deploy-zkSyncChronicles2": "graph deploy --studio mithraeum-zk-chronicles-with-tx-stat2",
+    "deploy-sentio-zkSyncChronicles": "npx @sentio/cli graph deploy --owner norb3g --name mithraeum-tx-stat-zk-chronicles"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "^0.58.0",
+    "@graphprotocol/graph-ts": "^0.31.0",
+    "ethers": "^6.12.0",
+    "hardhat": "^2.11.1",
+    "ts-node": "^10.9.2"
+  },
+  "prettier": {
+    "overrides": [
+      {
+        "files": "*.ts",
+        "options": {
+          "printWidth": 120,
+          "tabWidth": 4,
+          "useTabs": false,
+          "singleQuote": false,
+          "bracketSpacing": false,
+          "explicitTypes": "always"
+        }
+      }
+    ]
+  },
+  "devDependencies": {
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.5.2"
+  }
+}

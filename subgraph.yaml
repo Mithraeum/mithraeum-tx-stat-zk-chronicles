@@ -1,0 +1,474 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: World
+    network: zksync-era
+    source:
+      address: '0xf5344A6dc5a11E4c51cEC45dcCD53b665936F5F1'
+      abi: World
+      startBlock: 49463792
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Era
+      abis:
+        - name: World
+          file: ./artifacts/contracts/core/World.sol/World.json
+      eventHandlers:
+        - event: >-
+            WorldInitialized(address,address,address,address,address,address,address,address,address)
+          handler: handleWorldInitialized
+        - event: GameBeginTimeUpdated(uint256)
+          handler: handleGameBeginTimeUpdated
+        - event: GameEndTimeUpdated(uint256)
+          handler: handleGameEndTimeUpdated
+        - event: EraCreated(address,uint256)
+          handler: handleEraCreated
+        - event: CurrentEraNumberUpdated(uint256)
+          handler: handleCurrentEraNumberUpdated
+      file: ./mappings/world.ts
+  - kind: ethereum/contract
+    name: Geography
+    network: zksync-era
+    source:
+      address: '0x036F78cEcE1037Fb1671c8d1d7A19C4F5FC9c5c9'
+      abi: Geography
+      startBlock: 49463794
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Geography
+      abis:
+        - name: Geography
+          file: ./artifacts/contracts/core/geography/Geography.sol/Geography.json
+      eventHandlers:
+        - event: RegionIncluded(uint64)
+          handler: handleNewRegionIncluded
+      file: ./mappings/geography.ts
+  - kind: ethereum/contract
+    name: Banner
+    network: zksync-era
+    source:
+      address: '0xaE38224a996d9Cf9D4CC0b7e36B3b3e94B75EA4A'
+      abi: Banners
+      startBlock: 49463898
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Banner
+        - Settlement
+      abis:
+        - name: Banners
+          file: ./artifacts/contracts/banners/Banners.sol/Banners.json
+      eventHandlers:
+        - event: BannerCreated(uint256,string,(address,uint256)[16],bytes)
+          handler: handleBannerCreated
+        - event: BannerUpdated(uint256,string,(address,uint256)[16],bytes)
+          handler: handleBannerUpdated
+      file: ./mappings/banner.ts
+  - kind: ethereum/contract
+    name: Distributions
+    network: zksync-era
+    source:
+      address: '0xD5DF04f1085A74c37063E26628F5114E12030527'
+      abi: Distributions
+      startBlock: 49463903
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Distributions
+        - Building
+      abis:
+        - name: Distributions
+          file: >-
+            ./artifacts/contracts/core/distributions/Distributions.sol/Distributions.json
+        - name: Building
+          file: >-
+            ./artifacts/contracts/core/assets/building/Building.sol/Building.json
+      eventHandlers:
+        - event: >-
+            TransferSingle(indexed address,indexed address,indexed
+            address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: >-
+            TransferBatch(indexed address,indexed address,indexed
+            address,uint256[],uint256[])
+          handler: handleTransferBatch
+      file: ./mappings/distributions.ts
+  - kind: ethereum/contract
+    name: Erc20ForSettlementPurchase
+    network: zksync-era
+    source:
+      address: '0xc5A6B8D69d7526d272EE0F91b68d259A25cCDf81'
+      abi: IERC20
+      startBlock: 49766487
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Erc20ForSettlementPurchaseTokenHolder
+      abis:
+        - name: IERC20
+          file: >-
+            ./artifacts/@openzeppelin/contracts/token/ERC20/IERC20.sol/IERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleErc20ForSettlementPurchaseTransfer
+      file: ./mappings/erc20ForSettlementPurchase.ts
+templates:
+  - kind: ethereum/contract
+    name: Era
+    network: zksync-era
+    source:
+      abi: Era
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Era
+        - Settlement
+      abis:
+        - name: Era
+          file: ./artifacts/contracts/core/assets/era/Era.sol/Era.json
+        - name: Settlement
+          file: >-
+            ./artifacts/contracts/core/assets/settlement/Settlement.sol/Settlement.json
+      eventHandlers:
+        - event: ResourceCreated(address,bytes32)
+          handler: handleResourceCreated
+        - event: UnitsCreated(address,bytes32)
+          handler: handleUnitsCreated
+        - event: WorkersCreated(address)
+          handler: handleWorkersCreated
+        - event: ProsperityCreated(address)
+          handler: handleProsperityCreated
+        - event: TileCapturingSystemCreated(address)
+          handler: handleTileCapturingSystemCreated
+        - event: RegionActivated(address,uint256)
+          handler: handleRegionActivated
+        - event: SettlementCreated(address,bytes32,address,uint64,uint256)
+          handler: handleSettlementCreated
+        - event: SettlementRestored(address,uint64)
+          handler: handleSettlementRestored
+      file: ./mappings/era.ts
+  - kind: ethereum/contract
+    name: TileCapturingSystem
+    network: zksync-era
+    source:
+      abi: TileCapturingSystem
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - TileCapturingSystem
+        - TileCapturingSystemRecord
+        - Settlement
+      abis:
+        - name: TileCapturingSystem
+          file: >-
+            ./artifacts/contracts/core/assets/tileCapturingSystem/TileCapturingSystem.sol/TileCapturingSystem.json
+      eventHandlers:
+        - event: TileCapturingBegan(address,uint64,address,uint256,uint64,uint64)
+          handler: handleTileCapturingBegan
+        - event: TileCapturingCancelled(uint64,address)
+          handler: handleTileCapturingCancelled
+        - event: CapturedTileClaimed(address,uint64,address,uint256)
+          handler: handleCapturedTileClaimed
+        - event: CapturedTileGivenUp(uint64,address)
+          handler: handleCapturedTileGivenUp
+      file: ./mappings/tileCapturingSystem.ts
+  - kind: ethereum/contract
+    name: Region
+    network: zksync-era
+    source:
+      abi: Region
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Region
+        - Settlement
+      abis:
+        - name: Region
+          file: ./artifacts/contracts/core/assets/region/Region.sol/Region.json
+      eventHandlers:
+        - event: WorkersPoolCreated(address)
+          handler: handleWorkersPoolCreated
+        - event: UnitsPoolCreated(address,bytes32)
+          handler: handleUnitsPoolCreated
+        - event: SettlementsMarketCreated(address)
+          handler: handleSettlementsMarketCreated
+        - event: CorruptionIndexIncreased(address,uint256)
+          handler: handleCorruptionIndexIncreased
+        - event: CorruptionIndexDecreased(address,uint256)
+          handler: handleCorruptionIndexDecreased
+      file: ./mappings/region.ts
+  - kind: ethereum/contract
+    name: WorkersPool
+    network: zksync-era
+    source:
+      abi: WorkersPool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Region
+        - WorkersPool
+      abis:
+        - name: WorkersPool
+          file: >-
+            ./artifacts/contracts/core/assets/workersPool/WorkersPool.sol/WorkersPool.json
+      eventHandlers:
+        - event: WorkersBought(address,uint256,uint256)
+          handler: handleWorkersBought
+      file: ./mappings/workersPool.ts
+  - kind: ethereum/contract
+    name: SettlementsMarket
+    network: zksync-era
+    source:
+      abi: SettlementsMarket
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - SettlementsMarket
+      abis:
+        - name: SettlementsMarket
+          file: >-
+            ./artifacts/contracts/core/assets/settlementsMarket/SettlementMarket.sol/SettlementsMarket.json
+      eventHandlers:
+        - event: SettlementBought(address,uint256)
+          handler: handleSettlementBought
+      file: ./mappings/settlementsMarket.ts
+  - kind: ethereum/contract
+    name: UnitsPool
+    network: zksync-era
+    source:
+      abi: UnitsPool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - UnitsPool
+        - Army
+      abis:
+        - name: UnitsPool
+          file: >-
+            ./artifacts/contracts/core/assets/unitsPool/IUnitsPool.sol/IUnitsPool.json
+        - name: Army
+          file: ./artifacts/contracts/core/assets/army/Army.sol/Army.json
+      eventHandlers:
+        - event: UnitsBought(address,address,uint256,uint256,uint256)
+          handler: handleUnitsBought
+      file: ./mappings/unitsPool.ts
+  - kind: ethereum/contract
+    name: Settlement
+    network: zksync-era
+    source:
+      abi: Settlement
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Settlement
+        - Army
+      abis:
+        - name: Settlement
+          file: >-
+            ./artifacts/contracts/core/assets/settlement/Settlement.sol/Settlement.json
+        - name: Building
+          file: >-
+            ./artifacts/contracts/core/assets/building/Building.sol/Building.json
+      eventHandlers:
+        - event: BuildingCreated(address,bytes32)
+          handler: handleBuildingCreated
+        - event: ArmyCreated(address,uint64)
+          handler: handleArmyCreated
+        - event: SiegeCreated(address)
+          handler: handleSiegeCreated
+        - event: GovernorStatusChanged(uint256,address,address,bool)
+          handler: handleGovernorStatusChanged
+        - event: GovernorsGenerationChanged(uint256)
+          handler: handleGovernorsGenerationChanged
+        - event: Destroyed()
+          handler: handleDestroyed
+      file: ./mappings/settlement.ts
+  - kind: ethereum/contract
+    name: Siege
+    network: zksync-era
+    source:
+      abi: Siege
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Siege
+        - Era
+      abis:
+        - name: Siege
+          file: ./artifacts/contracts/core/assets/siege/Siege.sol/Siege.json
+      eventHandlers:
+        - event: >-
+            ArmySiegeModified(address,bytes32[],bool[],uint256[],uint256,uint256)
+          handler: handleArmySiegeModified
+        - event: ArmyLiquidated(address)
+          handler: handleArmyLiquidated
+        - event: BuildingRobbed(address,address,uint256,uint256,uint256,uint256)
+          handler: handleBuildingRobbed
+      file: ./mappings/siege.ts
+  - kind: ethereum/contract
+    name: Building
+    network: zksync-era
+    source:
+      abi: Building
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Settlement
+        - Building
+      abis:
+        - name: Building
+          file: >-
+            ./artifacts/contracts/core/assets/building/Building.sol/Building.json
+      eventHandlers:
+        - event: BasicProductionUpgraded(uint256,uint256)
+          handler: handleBasicProductionUpgraded
+        - event: AdvancedProductionUpgraded(uint256,uint256)
+          handler: handleAdvancedProductionUpgraded
+        - event: DistributionCreated(uint256)
+          handler: handleDistributionCreated
+        - event: DistributedToShareHolder(bytes32,address,uint256)
+          handler: handleDistributedToShareHolder
+      file: ./mappings/building.ts
+  - kind: ethereum/contract
+    name: Army
+    network: zksync-era
+    source:
+      abi: Army
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Settlement
+        - Army
+        - Battle
+        - Era
+      abis:
+        - name: Army
+          file: ./artifacts/contracts/core/assets/army/Army.sol/Army.json
+        - name: Era
+          file: ./artifacts/contracts/core/assets/era/Era.sol/Era.json
+      eventHandlers:
+        - event: ManeuveringBegan(uint64,uint64,bytes32,uint256,uint256,uint256)
+          handler: handleManeuveringBegan
+        - event: UpdatedPosition(address,uint64)
+          handler: handleUpdatedPosition
+        - event: BattleCreated(address,address)
+          handler: handleBattleCreated
+        - event: SecretManeuverCancelled()
+          handler: handleSecretManeuverCancelled
+        - event: UnitsDemilitarized(bytes32[],uint256[])
+          handler: handleUnitsDemilitarized
+        - event: JoinedBattle(address,uint256)
+          handler: handleJoinedBattle
+      file: ./mappings/army.ts
+  - kind: ethereum/contract
+    name: Battle
+    network: zksync-era
+    source:
+      abi: Battle
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Settlement
+        - Army
+        - Battle
+      abis:
+        - name: Battle
+          file: ./artifacts/contracts/core/assets/battle/Battle.sol/Battle.json
+      eventHandlers:
+        - event: BattleEnded(uint256)
+          handler: handleBattleEnded
+      file: ./mappings/battle.ts
+  - kind: ethereum/contract
+    name: Resource
+    network: zksync-era
+    source:
+      abi: Resource
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Continent
+      abis:
+        - name: Resource
+          file: >-
+            ./artifacts/contracts/core/assets/tokens/resources/Resource.sol/Resource.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleResourceTransfer
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+      file: ./mappings/resource.ts
+  - kind: ethereum/contract
+    name: Units
+    network: zksync-era
+    source:
+      abi: Units
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Continent
+      abis:
+        - name: Units
+          file: ./artifacts/contracts/core/assets/tokens/units/Units.sol/Units.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleUnitsTransfer
+      file: ./mappings/units.ts
+  - kind: ethereum/contract
+    name: Workers
+    network: zksync-era
+    source:
+      abi: Workers
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Continent
+      abis:
+        - name: Workers
+          file: >-
+            ./artifacts/contracts/core/assets/tokens/workers/Workers.sol/Workers.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleWorkersTransfer
+      file: ./mappings/workers.ts
