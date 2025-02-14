@@ -5,6 +5,11 @@
   "abi": [
     {
       "inputs": [],
+      "name": "CannotTransferProducingResourceFromBuilding",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "GovernorCannotBeAddedIfSenderNotSettlementOwnerOrAnotherGovernor",
       "type": "error"
     },
@@ -173,39 +178,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "resourcesOwner",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "buildingAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "workersAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "resourceTypeIds",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "resourcesAmounts",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "assignResourcesAndWorkersToBuilding",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -436,6 +408,63 @@
         }
       ],
       "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "components": [
+            {
+              "internalType": "bytes32",
+              "name": "buildingTypeId",
+              "type": "bytes32"
+            },
+            {
+              "internalType": "bool",
+              "name": "isTransferringWorkersFromBuilding",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "workersAmount",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "bool",
+                  "name": "isTransferringResourcesFromBuilding",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "address",
+                  "name": "resourcesOwnerOrResourcesReceiver",
+                  "type": "address"
+                },
+                {
+                  "internalType": "bytes32",
+                  "name": "resourceTypeId",
+                  "type": "bytes32"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "resourcesAmount",
+                  "type": "uint256"
+                }
+              ],
+              "internalType": "struct ISettlement.ResourcesModificationParam[]",
+              "name": "resources",
+              "type": "tuple[]"
+            }
+          ],
+          "internalType": "struct ISettlement.BuildingProductionModificationParam[]",
+          "name": "params",
+          "type": "tuple[]"
+        }
+      ],
+      "name": "modifyBuildingsProduction",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {

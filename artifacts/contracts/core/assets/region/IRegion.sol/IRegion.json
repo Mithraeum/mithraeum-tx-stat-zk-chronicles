@@ -9,6 +9,11 @@
       "type": "error"
     },
     {
+      "inputs": [],
+      "name": "OnlySettlementRulerCanDemilitarizeArmyUnits",
+      "type": "error"
+    },
+    {
       "anonymous": false,
       "inputs": [
         {
@@ -137,39 +142,6 @@
       "type": "event"
     },
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "tokensOwner",
-          "type": "address"
-        },
-        {
-          "internalType": "address",
-          "name": "settlementAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "unitTypeIds",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "unitsAmounts",
-          "type": "uint256[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "maxTokensToSell",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "buyUnitsBatch",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
       "inputs": [],
       "name": "corruptionIndex",
       "outputs": [
@@ -280,6 +252,49 @@
         }
       ],
       "name": "handleCultistsSummoned",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "tokensOwner",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "settlementAddress",
+          "type": "address"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "unitTypeIdsToHire",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "unitsAmountsToHire",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "maxTokensToSellToHireUnits",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "bytes32[]",
+          "name": "unitTypeIdsToDemilitarize",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "unitsAmountsToDemilitarize",
+          "type": "uint256[]"
+        }
+      ],
+      "name": "hireAndDemilitarizeUnitsBatch",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"

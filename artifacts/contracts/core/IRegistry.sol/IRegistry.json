@@ -118,6 +118,37 @@
     },
     {
       "inputs": [],
+      "name": "getBuildingActivationPrice",
+      "outputs": [
+        {
+          "internalType": "bytes32[]",
+          "name": "resourcesTypesIds",
+          "type": "bytes32[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "resourcesAmounts",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getBuildingCooldownDurationAfterActivation",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "cooldownDuration",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "getBuildingTokenTransferThresholdPercent",
       "outputs": [
         {
@@ -168,6 +199,19 @@
         {
           "internalType": "uint256",
           "name": "captureTileDurationPerTile",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getCaptureTileInitialDuration",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "captureTileInitialDuration",
           "type": "uint256"
         }
       ],
@@ -258,6 +302,19 @@
         {
           "internalType": "uint256",
           "name": "cultistsSummonDelay",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getDemilitarizationCooldown",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "demilitarizationCooldown",
           "type": "uint256"
         }
       ],
@@ -365,11 +422,11 @@
     },
     {
       "inputs": [],
-      "name": "getInitialCorruptionIndexAmountPerRegionTier",
+      "name": "getInitialCorruptionIndexPerCultistMultiplier",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "initialCorruptionIndexAmount",
+          "name": "initialCorruptionIndexPerCultistMultiplier",
           "type": "uint256"
         }
       ],
@@ -377,8 +434,14 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "getInitialCultistsAmountPerRegionTier",
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "regionTier",
+          "type": "uint256"
+        }
+      ],
+      "name": "getInitialCultistsAmountByRegionTier",
       "outputs": [
         {
           "internalType": "uint256",
@@ -391,11 +454,11 @@
     },
     {
       "inputs": [],
-      "name": "getManeuverDurationStunMultiplier",
+      "name": "getManeuverStunDuration",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "maneuverDurationStunMultiplier",
+          "name": "maneuverStunDuration",
           "type": "uint256"
         }
       ],
@@ -752,11 +815,11 @@
     },
     {
       "inputs": [],
-      "name": "getStunDurationMultiplierOfCancelledSecretManeuver",
+      "name": "getStunDurationOfCancelledSecretManeuver",
       "outputs": [
         {
           "internalType": "uint256",
-          "name": "stunMultiplierOfCancelledSecretManeuver",
+          "name": "stunDurationOfCancelledSecretManeuver",
           "type": "uint256"
         }
       ],
@@ -870,8 +933,14 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "getUnitPriceIncreaseForEachUnit",
+      "inputs": [
+        {
+          "internalType": "bytes32",
+          "name": "unitTypeId",
+          "type": "bytes32"
+        }
+      ],
+      "name": "getUnitPriceIncreaseByUnitTypeId",
       "outputs": [
         {
           "internalType": "uint256",
@@ -1023,6 +1092,19 @@
         }
       ],
       "stateMutability": "pure",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getWorkersAmountForBuildingActivation",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "workersAmount",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

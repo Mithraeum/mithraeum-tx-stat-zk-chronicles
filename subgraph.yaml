@@ -1,14 +1,14 @@
-specVersion: 0.0.4
+specVersion: 1.0.0
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: World
-    network: zksync-era
+    network: soneium
     source:
-      address: '0xf5344A6dc5a11E4c51cEC45dcCD53b665936F5F1'
+      address: '0x38144C60E3B811187e7c852cc5CCf80ca35703b8'
       abi: World
-      startBlock: 49463792
+      startBlock: 3198404
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -18,9 +18,11 @@ dataSources:
       abis:
         - name: World
           file: ./artifacts/contracts/core/World.sol/World.json
+        - name: RewardPool
+          file: ./artifacts/contracts/core/rewardPool/RewardPool.sol/RewardPool.json
       eventHandlers:
         - event: >-
-            WorldInitialized(address,address,address,address,address,address,address,address,address)
+            WorldInitialized(address,address,address,address,address,address,address,address,address,address)
           handler: handleWorldInitialized
         - event: GameBeginTimeUpdated(uint256)
           handler: handleGameBeginTimeUpdated
@@ -33,11 +35,11 @@ dataSources:
       file: ./mappings/world.ts
   - kind: ethereum/contract
     name: Geography
-    network: zksync-era
+    network: soneium
     source:
-      address: '0x036F78cEcE1037Fb1671c8d1d7A19C4F5FC9c5c9'
+      address: '0x93c9b71651FE77BE0D4b50bd291237D188e035e9'
       abi: Geography
-      startBlock: 49463794
+      startBlock: 3198408
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -53,11 +55,11 @@ dataSources:
       file: ./mappings/geography.ts
   - kind: ethereum/contract
     name: Banner
-    network: zksync-era
+    network: soneium
     source:
-      address: '0xaE38224a996d9Cf9D4CC0b7e36B3b3e94B75EA4A'
+      address: '0x648ecf46D4b22D1B7Af239718470D2c17eD7faE7'
       abi: Banners
-      startBlock: 49463898
+      startBlock: 3198522
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -76,11 +78,11 @@ dataSources:
       file: ./mappings/banner.ts
   - kind: ethereum/contract
     name: Distributions
-    network: zksync-era
+    network: soneium
     source:
-      address: '0xD5DF04f1085A74c37063E26628F5114E12030527'
+      address: '0xCF55c801741aF8f0B69F750C404F9e0C3699E14b'
       abi: Distributions
-      startBlock: 49463903
+      startBlock: 3198531
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -107,11 +109,11 @@ dataSources:
       file: ./mappings/distributions.ts
   - kind: ethereum/contract
     name: Erc20ForSettlementPurchase
-    network: zksync-era
+    network: soneium
     source:
-      address: '0xc5A6B8D69d7526d272EE0F91b68d259A25cCDf81'
+      address: '0x7633acBABEEea112710d2Ec99a5fBc87D340BB06'
       abi: IERC20
-      startBlock: 49766487
+      startBlock: 3198356
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -129,7 +131,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Era
-    network: zksync-era
+    network: soneium
     source:
       abi: Era
     mapping:
@@ -165,7 +167,7 @@ templates:
       file: ./mappings/era.ts
   - kind: ethereum/contract
     name: TileCapturingSystem
-    network: zksync-era
+    network: soneium
     source:
       abi: TileCapturingSystem
     mapping:
@@ -192,7 +194,7 @@ templates:
       file: ./mappings/tileCapturingSystem.ts
   - kind: ethereum/contract
     name: Region
-    network: zksync-era
+    network: soneium
     source:
       abi: Region
     mapping:
@@ -219,7 +221,7 @@ templates:
       file: ./mappings/region.ts
   - kind: ethereum/contract
     name: WorkersPool
-    network: zksync-era
+    network: soneium
     source:
       abi: WorkersPool
     mapping:
@@ -239,7 +241,7 @@ templates:
       file: ./mappings/workersPool.ts
   - kind: ethereum/contract
     name: SettlementsMarket
-    network: zksync-era
+    network: soneium
     source:
       abi: SettlementsMarket
     mapping:
@@ -258,7 +260,7 @@ templates:
       file: ./mappings/settlementsMarket.ts
   - kind: ethereum/contract
     name: UnitsPool
-    network: zksync-era
+    network: soneium
     source:
       abi: UnitsPool
     mapping:
@@ -280,7 +282,7 @@ templates:
       file: ./mappings/unitsPool.ts
   - kind: ethereum/contract
     name: Settlement
-    network: zksync-era
+    network: soneium
     source:
       abi: Settlement
     mapping:
@@ -313,7 +315,7 @@ templates:
       file: ./mappings/settlement.ts
   - kind: ethereum/contract
     name: Siege
-    network: zksync-era
+    network: soneium
     source:
       abi: Siege
     mapping:
@@ -337,7 +339,7 @@ templates:
       file: ./mappings/siege.ts
   - kind: ethereum/contract
     name: Building
-    network: zksync-era
+    network: soneium
     source:
       abi: Building
     mapping:
@@ -363,7 +365,7 @@ templates:
       file: ./mappings/building.ts
   - kind: ethereum/contract
     name: Army
-    network: zksync-era
+    network: soneium
     source:
       abi: Army
     mapping:
@@ -396,7 +398,7 @@ templates:
       file: ./mappings/army.ts
   - kind: ethereum/contract
     name: Battle
-    network: zksync-era
+    network: soneium
     source:
       abi: Battle
     mapping:
@@ -416,7 +418,7 @@ templates:
       file: ./mappings/battle.ts
   - kind: ethereum/contract
     name: Resource
-    network: zksync-era
+    network: soneium
     source:
       abi: Resource
     mapping:
@@ -437,7 +439,7 @@ templates:
       file: ./mappings/resource.ts
   - kind: ethereum/contract
     name: Units
-    network: zksync-era
+    network: soneium
     source:
       abi: Units
     mapping:
@@ -455,7 +457,7 @@ templates:
       file: ./mappings/units.ts
   - kind: ethereum/contract
     name: Workers
-    network: zksync-era
+    network: soneium
     source:
       abi: Workers
     mapping:

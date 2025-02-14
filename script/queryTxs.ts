@@ -2,8 +2,8 @@ import {ethers} from "ethers";
 
 const fs = require('fs');
 
-export async function requestBatch(time: bigint): Promise<any[]> {
-    const response = await fetch("https://api.studio.thegraph.com/query/72578/mithraeum-zk-chronicles-with-tx-stat/version/latest", {
+export async function requestBatch(graphRequestUrl: string, time: bigint): Promise<any[]> {
+    const response = await fetch(graphRequestUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -109,14 +109,16 @@ function isSameTxs(txs1: any[], txs2: any[]) {
 }
 
 async function main() {
-    const fileName = "txs.txt";
+    const fileName = "soneiumTxs.txt";
+    // const graphRequestUrl = "https://api.studio.thegraph.com/query/72578/mithraeum-zk-chronicles-with-tx-stat/version/latest";//zk sync
+    const graphRequestUrl = "https://api.studio.thegraph.com/query/72578/mithraeum-tx-stat-soneium/version/latest";
 
     let maxTime = BigInt(0);
     let newTxs: any[] = [];
     let oldTxs: any[] = [];
     do {
         maxTime = await getMaxTimeFromFile(fileName);
-        newTxs = await requestBatch(maxTime);
+        newTxs = await requestBatch(graphRequestUrl, maxTime);
 
         if (isSameTxs(oldTxs, newTxs)) {
             console.log("getting same result, breaking");

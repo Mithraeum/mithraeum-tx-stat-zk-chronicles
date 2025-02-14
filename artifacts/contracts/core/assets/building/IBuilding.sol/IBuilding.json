@@ -5,12 +5,27 @@
   "abi": [
     {
       "inputs": [],
+      "name": "BuildingCannotBeActivatedMoreThanOnce",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "BuildingCannotBeUpgradedWhileItsNotActivated",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "BuildingCannotBeUpgradedWhileUpgradeIsOnCooldown",
       "type": "error"
     },
     {
       "inputs": [],
-      "name": "CannotTransferProducingResourceFromBuilding",
+      "name": "BuildingCannotGiveWorkersBeforeActivationCooldownFinished",
+      "type": "error"
+    },
+    {
+      "inputs": [],
+      "name": "BuildingCannotGiveWorkersMoreThanOnce",
       "type": "error"
     },
     {
@@ -173,6 +188,25 @@
       "type": "event"
     },
     {
+      "anonymous": false,
+      "inputs": [],
+      "name": "WorkersClaimed",
+      "type": "event"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "resourcesOwner",
+          "type": "address"
+        }
+      ],
+      "name": "activateBuilding",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "advancedProduction",
       "outputs": [
@@ -220,6 +254,24 @@
     },
     {
       "inputs": [],
+      "name": "buildingActivationInfo",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "activationTime",
+          "type": "uint64"
+        },
+        {
+          "internalType": "bool",
+          "name": "isWorkersClaimed",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
       "name": "buildingTypeId",
       "outputs": [
         {
@@ -240,6 +292,13 @@
         }
       ],
       "name": "burnTreasury",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "claimWorkersForBuildingActivation",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -682,39 +741,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "workersReceiverAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "uint256",
-          "name": "workersAmount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "resourcesReceiverAddress",
-          "type": "address"
-        },
-        {
-          "internalType": "bytes32[]",
-          "name": "resourceTypeIds",
-          "type": "bytes32[]"
-        },
-        {
-          "internalType": "uint256[]",
-          "name": "resourcesAmounts",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "removeResourcesAndWorkers",
-      "outputs": [],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {

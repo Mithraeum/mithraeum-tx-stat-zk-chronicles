@@ -25,6 +25,11 @@
     },
     {
       "inputs": [],
+      "name": "ArmyCannotBeDemilitarizedDueToCooldown",
+      "type": "error"
+    },
+    {
+      "inputs": [],
       "name": "ArmyCannotBesiegeOwnSettlement",
       "type": "error"
     },
@@ -582,6 +587,19 @@
       "name": "joinBattle",
       "outputs": [],
       "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "lastDemilitarizationTime",
+      "outputs": [
+        {
+          "internalType": "uint64",
+          "name": "",
+          "type": "uint64"
+        }
+      ],
+      "stateMutability": "view",
       "type": "function"
     },
     {

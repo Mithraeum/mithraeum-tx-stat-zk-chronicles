@@ -5,13 +5,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "buildGraph": "graph build",
-    "deploy-zkSyncChronicles": "graph deploy --studio mithraeum-zk-chronicles-with-tx-stat",
-    "deploy-zkSyncChronicles2": "graph deploy --studio mithraeum-zk-chronicles-with-tx-stat2",
-    "deploy-sentio-zkSyncChronicles": "npx @sentio/cli graph deploy --owner norb3g --name mithraeum-tx-stat-zk-chronicles"
+    "deploy-soneium": "graph deploy mithraeum-tx-stat-soneium"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "^0.58.0",
-    "@graphprotocol/graph-ts": "^0.31.0",
+    "@graphprotocol/graph-ts": "^0.37.0",
     "ethers": "^6.12.0",
     "hardhat": "^2.11.1",
     "ts-node": "^10.9.2"

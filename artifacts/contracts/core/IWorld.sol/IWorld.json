@@ -133,6 +133,12 @@
         {
           "indexed": false,
           "internalType": "address",
+          "name": "erc20ForCorruptionIndexBuyoutAddress",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "address",
           "name": "regionOwnershipTokenAddress",
           "type": "address"
         },
@@ -246,6 +252,19 @@
       "outputs": [
         {
           "internalType": "contract IEra",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "erc20ForCorruptionIndexBuyout",
+      "outputs": [
+        {
+          "internalType": "contract IERC20",
           "name": "",
           "type": "address"
         }
