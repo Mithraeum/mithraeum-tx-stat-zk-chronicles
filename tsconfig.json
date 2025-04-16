@@ -1,29 +1,24 @@
 {
   "compilerOptions": {
-    "importHelpers": true,
-    "alwaysStrict": true,
-    "sourceMap": true,
-    "target": "esnext",
+    "target": "es2020",
+    "module": "commonjs",
+    "strict": true,
     "esModuleInterop": true,
-    "noImplicitReturns": true,
-    "noImplicitAny": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "strictNullChecks": true,
-    "stripInternal": true,
-    "noFallthroughCasesInSwitch": true,
-    "noEmitOnError": false,
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "skipLibCheck": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "outDir": "dist",
+    "resolveJsonModule": true
   },
-  "ts-node": {
-    "files": true,
-    "require": ["tsconfig-paths/register"],
-    "compilerOptions": {
-      "module": "commonjs"
-    }
-  }
+  "files": [
+    "./hardhat.config.ts",
+    "**/*.ts",
+    "chai-setup.ts"
+  ],
+  "include": [
+    "./hardhat.config.ts",
+    "./scripts",
+    "./test",
+    "./typechain-types",
+    "./deploy",
+    "./types"
+  ]
+  //  "files": ["./hardhat.config.ts"]
 }

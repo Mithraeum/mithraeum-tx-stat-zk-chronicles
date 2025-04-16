@@ -5,3 +5,5 @@ node_modules/
 generated/
 docker/data
 *.iml
+*.data.json
+*.data.csv

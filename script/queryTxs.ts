@@ -1,8 +1,19 @@
 import {ethers} from "ethers";
+import {convertArrayOfObjectsToCsvString, convertCsvStringToArrayOfObjects} from "./csv";
 
 const fs = require('fs');
 
-export async function requestBatch(graphRequestUrl: string, time: bigint): Promise<any[]> {
+interface Tx {
+    id: string;
+    blockNumber: string | undefined;
+    time: string | undefined;
+    gasLimit: string | undefined;
+    gasUsed: string | undefined;
+    gasPrice: string | undefined;
+    from: string | undefined;
+}
+
+export async function requestBatch(graphRequestUrl: string, time: bigint): Promise<Tx[]> {
     const response = await fetch(graphRequestUrl, {
         method: 'POST',
         headers: {
@@ -24,14 +35,28 @@ export async function requestBatch(graphRequestUrl: string, time: bigint): Promi
     return (await response.json())["data"]["txes"];
 }
 
-function getJsonObjectFromFileData(fileData: Buffer): { [key: string]: any } | null {
-    try {
-        // JSON.parse is able to parse buffer, ts just doesn't know about it
-        // @ts-ignore
-        return JSON.parse(fileData);
-    } catch (e) {
-        return null;
-    }
+function saveJsonToFile(fileName: string, jsonObjectFromFile: {[key: string]: any}) {
+    // fs.writeFileSync(fileName, JSON.stringify(jsonObjectFromFile,(_, v) => typeof v === 'bigint' ? v.toString() : v, "\t"));
+    fs.writeFileSync(fileName, convertArrayOfObjectsToCsvString(Object.values(jsonObjectFromFile)));
+}
+
+function getJsonObjectFromFileData(fileName: string): { [key: string]: Tx } | null {
+    // const fileData = fs.readFileSync(fileName);
+    //
+    // try {
+    //     // JSON.parse is able to parse buffer, ts just doesn't know about it
+    //     // @ts-ignore
+    //     return JSON.parse(fileData);
+    // } catch (e) {
+    //     return null;
+    // }
+
+    const fileString = fs.readFileSync(fileName, "utf-8");
+    const items = convertCsvStringToArrayOfObjects(fileString) as Tx[];
+    return items.reduce((result, item) => {
+        result[item.id] = item;
+        return result;
+    }, {} as { [key: string]: Tx })
 }
 
 async function getMaxTimeFromFile(fileName: string) {
@@ -39,8 +64,7 @@ async function getMaxTimeFromFile(fileName: string) {
         return BigInt(0);
     }
 
-    const fileData = fs.readFileSync(fileName);
-    let jsonObjectFromFile = getJsonObjectFromFileData(fileData);
+    let jsonObjectFromFile = getJsonObjectFromFileData(fileName);
     if (jsonObjectFromFile == null) {
         return BigInt(0);
     }
@@ -62,14 +86,13 @@ function getMaxTimeFromTxs(txs: any[]) {
     return maxTime;
 }
 
-async function writeTxsToFile(fileName: string, txs: any[]) {
+async function writeTxsToFile(fileName: string, txs: Tx[]) {
     // Creates empty json file if no file found
     if (!fs.existsSync(fileName)) {
-        fs.writeFileSync(fileName, JSON.stringify({}));
+        saveJsonToFile(fileName, {});
     }
 
-    const fileData = fs.readFileSync(fileName);
-    let jsonObjectFromFile = getJsonObjectFromFileData(fileData);
+    let jsonObjectFromFile = getJsonObjectFromFileData(fileName);
     if (jsonObjectFromFile == null) {
         jsonObjectFromFile = {};
     }
@@ -89,7 +112,7 @@ async function writeTxsToFile(fileName: string, txs: any[]) {
 
 
     // Save pretty json object to file
-    fs.writeFileSync(fileName, JSON.stringify(jsonObjectFromFile,(_, v) => typeof v === 'bigint' ? v.toString() : v, "\t"));
+    saveJsonToFile(fileName, jsonObjectFromFile);
 }
 
 function isSameTxs(txs1: any[], txs2: any[]) {
@@ -109,13 +132,18 @@ function isSameTxs(txs1: any[], txs2: any[]) {
 }
 
 async function main() {
-    const fileName = "soneiumTxs.txt";
+    // const fileName = "zkSyncChroniclesTxs.data.json";
+    const fileName = "soneiumTxs.data.csv";
+
     // const graphRequestUrl = "https://api.studio.thegraph.com/query/72578/mithraeum-zk-chronicles-with-tx-stat/version/latest";//zk sync
-    const graphRequestUrl = "https://api.studio.thegraph.com/query/72578/mithraeum-tx-stat-soneium/version/latest";
+    const graphRequestUrl = "https://api.studio.thegraph.com/query/72578/mithraeum-tx-stat-soneium/version/latest";//soneium
+
+    // const rpcUrl = 'https://mainnet.era.zksync.io';
+    const rpcUrl = 'https://rpc.soneium.org/';
 
     let maxTime = BigInt(0);
-    let newTxs: any[] = [];
-    let oldTxs: any[] = [];
+    let newTxs: Tx[] = [];
+    let oldTxs: Tx[] = [];
     do {
         maxTime = await getMaxTimeFromFile(fileName);
         newTxs = await requestBatch(graphRequestUrl, maxTime);
@@ -128,42 +156,85 @@ async function main() {
         // console.log(newTxs);
         await writeTxsToFile(fileName, newTxs);
 
-        // maxTime = await getMaxTimeFromTxs(newTxs);
-        // console.log(`Maxtime=${maxTime}`)
-
         console.log(`newTxs ${newTxs.length} saved`);
 
         oldTxs = [...newTxs];
     } while (newTxs.length > 0);
 
-    console.log("enriching txs with gasUsage...");
+    console.log("enriching txs with data from rpc node (this data is unavailable in thegraph)");
 
-    const provider = new ethers.JsonRpcProvider('https://mainnet.era.zksync.io');
+    const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-    const allTxs = Object.values(getJsonObjectFromFileData(fs.readFileSync(fileName)) as {id: string, gasUsed: string | undefined, gasPrice: string | undefined}[]);
-    const txsWithoutGasUsed = allTxs.filter(tx => tx.gasPrice === undefined);
+    const allTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: Tx });
+    const txsWithoutFromValue = allTxs.filter(tx => tx.from === undefined);
+    const batchSize = 10;
 
-    for (let i = 0; i < txsWithoutGasUsed.length; i++) {
-        const tx = txsWithoutGasUsed[i];
-        const receipt = await provider.getTransactionReceipt(tx.id);
-        if (!receipt) {
-            console.log(`tx has no receipt`);
-            continue;
+    let notYetPersistedTxs = [];
+
+    for (let i = 0; i < txsWithoutFromValue.length; i += batchSize) {
+        const startOffset = i;
+        const endOffset = Math.min(i + batchSize, txsWithoutFromValue.length);
+        const isLastBatch = endOffset === txsWithoutFromValue.length;
+        const shouldPersistInThisBatch = isLastBatch || notYetPersistedTxs.length >= 1000;
+
+        const txBatch = [];
+        for (let j = startOffset; j < endOffset; j++) {
+            txBatch.push(txsWithoutFromValue[j]);
         }
 
+        const processTx = async (tx: any): Promise<Tx | null> => {
+            const receipt = await provider.getTransactionReceipt(tx.id);
+            if (!receipt) {
+                console.log(`tx has no receipt`);
+                return null;
+            }
 
-        tx.gasUsed = receipt.gasUsed.toString();
-        tx.gasPrice = receipt.gasPrice.toString();
+            tx.from = receipt.from.toString();
+            tx.gasUsed = receipt.gasUsed.toString();
+            tx.gasPrice = receipt.gasPrice.toString();
 
-        await writeTxsToFile(fileName, [tx]);
+            return tx;
+        }
 
+        const processedTxs = await Promise.all(
+            txBatch.map(async tx => {
+                return await processTx(tx);
+            })
+        );
 
-        console.log(`tx ${tx.id} has ${tx.gasUsed} gas used, i = ${i}, length = ${txsWithoutGasUsed.length}`)
+        const nonNullProcessedTxs = processedTxs.filter(tx => tx !== null);
+
+        nonNullProcessedTxs.forEach(tx => {
+            console.log(`tx ${tx.id} has ${tx.gasUsed} gas used, i = ${i}, length = ${txsWithoutFromValue.length}`)
+        });
+
+        for (let j = 0; j < nonNullProcessedTxs.length; j++) {
+            notYetPersistedTxs.push(nonNullProcessedTxs[j]);
+        }
+
+        if (shouldPersistInThisBatch) {
+            await writeTxsToFile(fileName, notYetPersistedTxs);
+            console.log(`Saved ${notYetPersistedTxs.length} txs to file`);
+            notYetPersistedTxs = [];
+        }
     }
 
-    const allSavedTxs = Object.values(getJsonObjectFromFileData(fs.readFileSync(fileName)) as any[]);
+    let allSavedTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: Tx });
+
+    // filtering txs by some date
+    allSavedTxs = allSavedTxs.filter(tx => {
+
+        const itemDateTime = new Date(Number(tx.time) * 1000).getTime();
+
+        //YYYY-MM-DD
+        const desiredFromDateTime = new Date('2025-04-07 00:00:00 GMT+3').getTime();
+        const desiredToDateTime =   new Date('2025-04-16 23:59:59 GMT+3').getTime();
+
+        return itemDateTime >= desiredFromDateTime && itemDateTime <= desiredToDateTime;
+    });
+
     const totalEthUsedForTxs = Object.values(allSavedTxs).reduce((sum, item) => sum + BigInt(item.gasUsed!) * BigInt(item.gasPrice!), BigInt(0));
-    const ethPrice = 3800;
+    const ethPrice = 2000;
 
     console.log('total tx count', allSavedTxs.length);
     console.log('totalEthUsedForTxs', totalEthUsedForTxs);
@@ -171,7 +242,7 @@ async function main() {
     console.log(`totalEthUsedForTxs in usd (price is ${ethPrice} and it is specified in code)`, Number(totalEthUsedForTxs) / 1e18 * ethPrice);
 
     // Grouped txs by day in 'day.month.year' format
-    const groupedByDayTxs = allTxs.reduce((group, item: any) => {
+    const groupedByDayTxs = allSavedTxs.reduce((group, item: any) => {
         const itemDate = new Date(Number(item.time) * 1000);
         const year = itemDate.getFullYear();
         const month = itemDate.getMonth() + 1;
@@ -205,6 +276,8 @@ async function main() {
     }
 
     console.log('maxTxInDay', maxTxByDay);
+    console.log(`First tx in a list ${new Date(Number(allSavedTxs[0].time) * 1000)}`);
+    console.log(`Last tx in a list ${new Date(Number(allSavedTxs[allSavedTxs.length - 1].time) * 1000)}`);
 }
 
 main();
