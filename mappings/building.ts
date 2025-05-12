@@ -1,7 +1,7 @@
 import {
     BasicProductionUpgraded,
     AdvancedProductionUpgraded,
-    DistributionCreated, DistributedToShareHolder
+    DistributionCreated, DistributedToShareHolder, ProductionInfoUpdated
 } from "../generated/templates/Building/Building";
 
 import {createTx} from "./_txLogger";
@@ -19,5 +19,9 @@ export function handleAdvancedProductionUpgraded(event: AdvancedProductionUpgrad
 }
 
 export function handleDistributionCreated(event: DistributionCreated): void {
+    createTx(event);
+}
+
+export function handleProductionInfoUpdated(event: ProductionInfoUpdated): void {
     createTx(event);
 }

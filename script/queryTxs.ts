@@ -3,6 +3,32 @@ import {convertArrayOfObjectsToCsvString, convertCsvStringToArrayOfObjects} from
 
 const fs = require('fs');
 
+interface DefaultSoneiumTxReceipt {
+    blockHash: string,
+    blockNumber: string;//bigint
+    contractAddress: string | null;
+    cumulativeGasUsed: string;//bigint
+    effectiveGasPrice: string;//bigint
+    from: string;
+
+    gasUsed: string;//bigint
+    l1BaseFeeScalar: string;//bigint
+    l1BlobBaseFee: string;//bigint
+    l1BlobBaseFeeScalar: string;//bigint
+    l1Fee: string;//bigint
+    l1GasPrice: string;//bigint
+    l1GasUsed: string;//bigint
+
+    logs: any[];
+
+    logsBloom: string;
+    status: string;
+    to: string;
+    transactionHash: string;
+    transactionIndex: string;
+    type: string;
+}
+
 interface Tx {
     id: string;
     blockNumber: string | undefined;
@@ -11,6 +37,10 @@ interface Tx {
     gasUsed: string | undefined;
     gasPrice: string | undefined;
     from: string | undefined;
+}
+
+interface SoneiumTx extends Tx {
+    l1Fee: string | undefined;
 }
 
 export async function requestBatch(graphRequestUrl: string, time: bigint): Promise<Tx[]> {
@@ -165,8 +195,8 @@ async function main() {
 
     const provider = new ethers.JsonRpcProvider(rpcUrl);
 
-    const allTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: Tx });
-    const txsWithoutFromValue = allTxs.filter(tx => tx.from === undefined);
+    const allTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: SoneiumTx });
+    const txsWithoutFromValue = allTxs.filter(tx => tx.l1Fee === undefined);
     const batchSize = 10;
 
     let notYetPersistedTxs = [];
@@ -182,16 +212,27 @@ async function main() {
             txBatch.push(txsWithoutFromValue[j]);
         }
 
-        const processTx = async (tx: any): Promise<Tx | null> => {
-            const receipt = await provider.getTransactionReceipt(tx.id);
+        const processTx = async (tx: any): Promise<SoneiumTx | null> => {
+            const receipt: DefaultSoneiumTxReceipt = await provider.send("eth_getTransactionReceipt", [tx.id]);
+            // const receipt = await provider.getTransactionReceipt(tx.id);
             if (!receipt) {
                 console.log(`tx has no receipt`);
                 return null;
             }
 
+            // console.log(receipt);
+
+            // Default receipt parse
+            // tx.from = receipt.from.toString();
+            // tx.gasUsed = receipt.gasUsed.toString();
+            // tx.gasPrice = receipt.gasPrice.toString();
+
+            // Soneium receipt parse
+            tx.blockNumber = BigInt(receipt.blockNumber).toString();
             tx.from = receipt.from.toString();
-            tx.gasUsed = receipt.gasUsed.toString();
-            tx.gasPrice = receipt.gasPrice.toString();
+            tx.gasUsed = BigInt(receipt.gasUsed).toString();
+            tx.gasPrice = BigInt(receipt.effectiveGasPrice).toString();
+            tx.l1Fee = BigInt(receipt.l1Fee).toString();
 
             return tx;
         }
@@ -219,7 +260,7 @@ async function main() {
         }
     }
 
-    let allSavedTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: Tx });
+    let allSavedTxs = Object.values(getJsonObjectFromFileData(fileName) as { [key: string]: SoneiumTx });
 
     // filtering txs by some date
     allSavedTxs = allSavedTxs.filter(tx => {
@@ -227,13 +268,21 @@ async function main() {
         const itemDateTime = new Date(Number(tx.time) * 1000).getTime();
 
         //YYYY-MM-DD
-        const desiredFromDateTime = new Date('2025-04-07 00:00:00 GMT+3').getTime();
-        const desiredToDateTime =   new Date('2025-04-16 23:59:59 GMT+3').getTime();
+        const desiredFromDateTime = new Date('2025-05-07 00:00:00 GMT+3').getTime();
+        const desiredToDateTime =   new Date('2026-05-20 23:59:59 GMT+3').getTime();
 
         return itemDateTime >= desiredFromDateTime && itemDateTime <= desiredToDateTime;
     });
 
-    const totalEthUsedForTxs = Object.values(allSavedTxs).reduce((sum, item) => sum + BigInt(item.gasUsed!) * BigInt(item.gasPrice!), BigInt(0));
+    const totalEthUsedForTxs = Object.values(allSavedTxs).reduce((sum, item) => {
+        let totalTxFee = BigInt(item.gasUsed!) * BigInt(item.gasPrice!);
+        if (item.l1Fee) {
+            totalTxFee += BigInt(item.l1Fee);
+        }
+
+        return sum + totalTxFee;
+    }, BigInt(0));
+
     const ethPrice = 2000;
 
     console.log('total tx count', allSavedTxs.length);
@@ -265,6 +314,11 @@ async function main() {
         return [key, value.length];
     });
 
+    const totalGasUsed = Object.values(allSavedTxs).reduce((sum, item) => {
+        let gasUsed = BigInt(item.gasUsed!);
+        return sum + gasUsed;
+    }, BigInt(0));
+
     console.log('tx counts by day', txsCountByDay);
 
     // Max transactions in one day
@@ -278,6 +332,7 @@ async function main() {
     console.log('maxTxInDay', maxTxByDay);
     console.log(`First tx in a list ${new Date(Number(allSavedTxs[0].time) * 1000)}`);
     console.log(`Last tx in a list ${new Date(Number(allSavedTxs[allSavedTxs.length - 1].time) * 1000)}`);
+    console.log('Total gas used', totalGasUsed.toString());
 }
 
 main();

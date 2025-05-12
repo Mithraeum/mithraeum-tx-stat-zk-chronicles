@@ -354,6 +354,8 @@ templates:
           file: >-
             ./artifacts/contracts/core/assets/building/Building.sol/Building.json
       eventHandlers:
+        - event: ProductionInfoUpdated(uint256,uint256,uint256,uint256)
+          handler: handleProductionInfoUpdated
         - event: BasicProductionUpgraded(uint256,uint256)
           handler: handleBasicProductionUpgraded
         - event: AdvancedProductionUpgraded(uint256,uint256)
